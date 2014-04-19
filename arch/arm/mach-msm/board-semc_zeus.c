@@ -664,14 +664,14 @@ static uint32_t camera_on_gpio_table[] = {
 static void msm_camera_vreg_enable(void)
 {
 	vreg_helper("gp15", 1200000, 1); /* L22 */
-	vreg_helper("lvsw1", 1800000, 1); /* LVS1 */
+	//vreg_helper("lvsw1", 1800000, 1); /* LVS1 */
 	vreg_helper("gp2", 2800000, 1); /* L11 */
 }
 
 static void msm_camera_vreg_disable(void)
 {
 	vreg_helper("gp15", 1200000, 0); /* L22 */
-	vreg_helper("lvsw1", 1800000, 0); /* LVS1 */
+	//vreg_helper("lvsw1", 1800000, 0); /* LVS1 */
 	vreg_helper("gp2", 2800000, 0); /* L11 */
 }
 
@@ -2208,6 +2208,7 @@ static struct msm_otg_platform_data msm_otg_pdata = {
 #ifdef CONFIG_USB_GADGET
 static struct msm_hsusb_gadget_platform_data msm_gadget_pdata = {
 	.is_phy_status_timer_on = 1,
+	.prop_chg = 1,
 };
 #endif
 #ifndef CONFIG_USB_EHCI_MSM_72K
@@ -2271,6 +2272,7 @@ static struct platform_device android_pmem_device = {
 static struct msm_serial_hs_platform_data msm_uart_dm1_pdata = {
        .inject_rx_on_wakeup = 1,
        .rx_to_inject = 0xFD,
+       .uartdm_rx_buf_size = 1024,
 };
 
 static struct resource msm_fb_resources[] = {
@@ -3260,7 +3262,7 @@ static void __init zeus_temp_fixups(void)
 				GPIO_CFG_ENABLE);
 
 	/* Since the sequencing for AKM & BMA needs to be L10 -> L8 */
-	vreg_helper("gp4", 2850000, 1);  /* L10: BMA150, AK8975B */
+	vreg_helper("gp4", 2600000, 1);  /* L10: BMA150, AK8975B */
 
 	vreg_helper("wlan", 1800000, 1);  /* L13: touchpad VDIO */
 	vreg_helper("gp10", 2800000, 1);  /* L16: touchpad */

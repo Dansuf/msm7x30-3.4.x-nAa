@@ -228,7 +228,7 @@
 #ifdef CONFIG_SEMC_CAMERA_8MP
 #define MSM_PMEM_ADSP_SIZE      0x2A00000
 #else
-#define MSM_PMEM_ADSP_SIZE      0x1D00000
+#define MSM_PMEM_ADSP_SIZE      0x1FBD000
 #endif
 #define PMEM_KERNEL_EBI0_SIZE   0x600000
 
@@ -2883,6 +2883,7 @@ static struct msm_otg_platform_data msm_otg_pdata = {
 #ifdef CONFIG_USB_GADGET
 static struct msm_hsusb_gadget_platform_data msm_gadget_pdata = {
 	.is_phy_status_timer_on = 1,
+	.prop_chg = 1,
 };
 #endif
 #ifndef CONFIG_USB_EHCI_MSM_72K
@@ -2946,6 +2947,7 @@ static struct platform_device android_pmem_device = {
 static struct msm_serial_hs_platform_data msm_uart_dm1_pdata = {
        .inject_rx_on_wakeup = 1,
        .rx_to_inject = 0xFD,
+       .uartdm_rx_buf_size = 1024,
 };
 
 static struct resource msm_fb_resources[] = {
@@ -2982,7 +2984,7 @@ static struct platform_device msm_migrate_pages_device = {
 static struct android_pmem_platform_data android_pmem_adsp_pdata = {
        .name = "pmem_adsp",
        .allocator_type = PMEM_ALLOCATORTYPE_BITMAP,
-       .cached = 0,
+       .cached = 1,
 	.memory_type = MEMTYPE_EBI0,
 };
 
